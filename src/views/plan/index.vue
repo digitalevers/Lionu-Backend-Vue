@@ -26,7 +26,7 @@
           <span>{{ scope.row.plan_name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="监测链接（点击复制）"  align="center" width="200px">
+      <el-table-column :show-overflow-tooltip="true" label="监测链接（点击复制）"  align="center" width="200px">
         <template slot-scope="scope">
           <span @click="handleCopy(scope.$index, scope.row)">{{ scope.row.click_monitor_link }}</span>
         </template>

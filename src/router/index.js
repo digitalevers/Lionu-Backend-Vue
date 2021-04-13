@@ -46,14 +46,27 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/survey',
     children: [{
-      path: '/dashboard',
+      path: '/survey',
+      name: 'Survey',
+      component: () => import('@/views/survey/index'),
+      meta: { title: '系统概况', icon: require('@/assets/survey.png'), iconActive: require('@/assets/survey_active.png') }
+    }]
+  },
+
+  {
+    path: '/dashboard',
+    component: Layout,
+    // redirect: '/dashboard',
+    children: [{
+      path: '/dashboard/index',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
       meta: { title: '应用管理', icon: require('@/assets/app.png'), iconActive: require('@/assets/app_active.png') }
     }]
   },
+
   {
     path: '/plan',
     component: Layout,
