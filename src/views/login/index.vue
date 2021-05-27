@@ -116,8 +116,8 @@ export default {
         if (valid) {
           this.loading = true
           this.loginForm.that = this
-          this.$store.dispatch('user/login', this.loginForm).then((res) => {
-            console.log('askjdkssaasksakkda',res)
+          this.$store.dispatch('user/login', this.loginForm).then(res => {
+            //console.log('askjdkssaasksakkda',res)
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
           }).catch(() => {

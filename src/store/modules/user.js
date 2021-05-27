@@ -34,15 +34,15 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), pwd: password }).then(response => {
         const { data } = response
-        console.log('response222',response)
-        // if(response.code == 200){
+        //console.log('response222',response)
+        if(response.code == 200){
           commit('SET_TOKEN', response.data)
           setToken(response.data)
-          resolve()
-        // }else{
-          // that.loading = false
-          // that.$message.error(response.msg)
-        // }
+          resolve('abc')
+         }else{
+           that.loading = false
+           that.$message.error(response.msg)
+         }
         
       }).catch(error => {
         reject(error)

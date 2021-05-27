@@ -23,9 +23,9 @@
       </el-table-column>
       <el-table-column label="平台"  align="center">
         <template slot-scope="scope">
-          <div style="text-align: left;margin-left: 40px;" v-if="scope.row.app_os == 1"><svg-icon icon-class="android" style="width:20px;height:20px;vertical-align: middle;margin-top: -3px;"/> {{ scope.row.app_os | statusFilter }}</div>
-          <div style="text-align: left;margin-left: 40px;" v-else-if="scope.row.app_os == 2"><svg-icon icon-class="ios" style="width:20px;height:20px;vertical-align: middle;margin-top: -3px;"/> {{ scope.row.app_os | statusFilter }}</div>
-          <div style="text-align: left;margin-left: 40px;" v-else><svg-icon icon-class="app" style="width:20px;height:20px;vertical-align: middle;margin-top: -3px;"/> {{ scope.row.app_os | statusFilter }}</div>
+          <div style="text-align: left;margin-left: 130px;" v-if="scope.row.app_os == 1"><svg-icon icon-class="android" style="width:20px;height:20px;vertical-align: middle;margin-top: -3px;"/> {{ scope.row.app_os | statusFilter }}</div>
+          <div style="text-align: left;margin-left: 130px;" v-else-if="scope.row.app_os == 2"><svg-icon icon-class="ios" style="width:20px;height:20px;vertical-align: middle;margin-top: -3px;"/> {{ scope.row.app_os | statusFilter }}</div>
+          <div style="text-align: left;margin-left: 130px;" v-else><svg-icon icon-class="app" style="width:20px;height:20px;vertical-align: middle;margin-top: -3px;"/> {{ scope.row.app_os | statusFilter }}</div>
         </template>
       </el-table-column>
       <el-table-column label="包名"  align="center">
@@ -75,9 +75,9 @@ export default {
       const statusMap = {
         '1': 'Android ',
         '2': 'iOS',
-        '3': 'H5',
+        /*'3': 'H5',
         '4': '小程序',
-        '5': 'Unity'
+        '5': 'Unity'*/
       }
       return statusMap[status]
     }
@@ -100,7 +100,7 @@ export default {
     getList() {
       this.listLoading = true
       getList(this.listQuery).then(response => {
-        console.log('列表', response.data)
+        //console.log('列表', response.data)
         this.list = response.data.apps;
         this.total = Number(response.data.total)
         if(this.list.length === 0 && this.total > 0) {
