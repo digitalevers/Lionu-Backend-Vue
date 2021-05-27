@@ -23,9 +23,9 @@
       </el-table-column>
       <el-table-column label="平台"  align="center">
         <template slot-scope="scope">
-          <div style="text-align: left;margin-left: 40px;" v-if="scope.row.app_os == 1"><svg-icon icon-class="android" style="width:20px;height:20px;vertical-align: middle;margin-top: -3px;"/> {{ scope.row.app_os | statusFilter }}</div>
-          <div style="text-align: left;margin-left: 40px;" v-else-if="scope.row.app_os == 2"><svg-icon icon-class="ios" style="width:20px;height:20px;vertical-align: middle;margin-top: -3px;"/> {{ scope.row.app_os | statusFilter }}</div>
-          <div style="text-align: left;margin-left: 40px;" v-else><svg-icon icon-class="app" style="width:20px;height:20px;vertical-align: middle;margin-top: -3px;"/> {{ scope.row.app_os | statusFilter }}</div>
+          <div style="text-align: left;margin-left: 130px;" v-if="scope.row.app_os == 1"><svg-icon icon-class="android" style="width:20px;height:20px;vertical-align: middle;margin-top: -3px;"/> {{ scope.row.app_os | statusFilter }}</div>
+          <div style="text-align: left;margin-left: 130px;" v-else-if="scope.row.app_os == 2"><svg-icon icon-class="ios" style="width:20px;height:20px;vertical-align: middle;margin-top: -3px;"/> {{ scope.row.app_os | statusFilter }}</div>
+          <div style="text-align: left;margin-left: 130px;" v-else><svg-icon icon-class="app" style="width:20px;height:20px;vertical-align: middle;margin-top: -3px;"/> {{ scope.row.app_os | statusFilter }}</div>
         </template>
       </el-table-column>
       <el-table-column label="包名"  align="center">
