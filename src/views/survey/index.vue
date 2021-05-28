@@ -2,10 +2,6 @@
 <div class="app-container">
     <div class="filter-container">
       <div class="filter-title">硬件概况</div>
-      <div class="warn-content">
-        <img v-if="coresData<4 || memData<4" :src="warnImg" />
-        <div v-if="coresData<4 || memData<4" class="warn-text">您的系统配置过低，可能无法运行Spark，推荐系统配置4核4G</div>
-      </div>
     </div>
     <el-table v-loading="listLoading" :data="hardwareList" fit stripe highlight-current-row>
       <el-table-column align="center" label="配置项" width="200">
@@ -20,6 +16,11 @@
       </el-table-column>
     </el-table>
 
+    <div class="warn-content">
+        <img v-if="coresData<4 || memData<4" :src="warnImg" />
+        <div v-if="coresData<4 || memData<4" class="warn-text">您的系统配置过低，可能无法运行Spark，推荐系统配置4核4G</div>
+    </div>
+
     <div class="filter-container">
       <div class="filter-title">软件概况</div>
     </div>
@@ -31,9 +32,6 @@
       </el-table-column>
       <el-table-column align="center" label="操作" width="200">
         <template slot-scope="scope">
-          <!-- <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button> -->
-          
           <div class="item-right">
             <div v-if="scope.row.id == 1" class="item-text" :class="scope.row.num == 1?' installed':''">{{scope.row.num == 1?'已安装':'未安装'}}</div>
             <div v-else class="item-text" :class="scope.row.num == 1?' installed':''">{{scope.row.num == 1?'已启动':'未启动'}}</div>
@@ -94,22 +92,22 @@ export default {
       softwareList: [
         {
           id: 1,
-          name: 'Kafka-php扩展',
+          name: 'kafka-php扩展',
           installLoading: false,
         },
         {
           id: 2,
-          name: 'ZooKeeper',
+          name: 'zooKeeper',
           installLoading: false,
         },
         {
           id: 3,
-          name: 'Kafka',
+          name: 'kafka',
           installLoading: false,
         },
         {
           id: 4,
-          name: 'Spark',
+          name: 'spark',
           installLoading: false,
         },
         
