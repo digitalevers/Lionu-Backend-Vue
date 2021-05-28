@@ -1,57 +1,43 @@
 <template>
-<div class="app-container">
-    <div class="filter-container">
-      <div class="filter-title">硬件概况</div>
-      <div class="warn-content">
-        <img v-if="coresData<4 || memData<4" :src="warnImg" />
-        <div v-if="coresData<4 || memData<4" class="warn-text">您的系统配置过低，可能无法运行Spark，推荐系统配置4核4G</div>
+  <div v-loading="listLoading" class="app-container">
+    <div class="title-content">
+      <img class="hardware-img" :src="hardware" />
+      <div class="title-text">硬件概况</div>
+    </div>
+    <div class="hardware-list">
+      <div class="list-item" v-for="(item,index) in hardwareList" :key="index">
+        <div class="item-name">{{item.name}}</div>
+        <div>{{item.num}}</div>
       </div>
     </div>
-    <el-table v-loading="listLoading" :data="hardwareList" fit stripe highlight-current-row>
-      <el-table-column align="center" label="配置项" width="200">
-        <template slot-scope="scope">
-          {{ scope.row.name }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="配置值" width="200">
-        <template slot-scope="scope">
-          {{ scope.row.num }}
-        </template>
-      </el-table-column>
-    </el-table>
-
-    <div class="filter-container">
-      <div class="filter-title">软件概况</div>
+    <div class="warn-content">
+      <img v-if="coresData<2 || memData<2" :src="warnImg" />
+      <div v-if="coresData<2 || memData<2" class="warn-text">您的系统配置过低，可能无法运行Spark，推荐系统配置4核4G</div>
     </div>
-    <el-table v-loading="listLoading" :data="softwareList" fit stripe highlight-current-row>
-      <el-table-column align="center" label="环境" width="200">
-        <template slot-scope="scope">
-          {{ scope.row.name }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="操作" width="200">
-        <template slot-scope="scope">
-          <!-- <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button> -->
-          
-          <div class="item-right">
-            <div v-if="scope.row.id == 1" class="item-text" :class="scope.row.num == 1?' installed':''">{{scope.row.num == 1?'已安装':'未安装'}}</div>
-            <div v-else class="item-text" :class="scope.row.num == 1?' installed':''">{{scope.row.num == 1?'已启动':'未启动'}}</div>
-
-            <el-button v-if="scope.row.num == 0 && scope.row.id == 1" type="primary" size="mini" @click="handleInstall(scope.row)">
-              <i v-if="scope.row.installLoading" class="el-icon-loading"></i>
-              {{scope.row.installLoading?'正在安装':'点击安装'}}
-            </el-button>
-            <el-button v-if="scope.row.num == 0 && scope.row.id != 1" type="primary" size="mini" @click="handleInstall(scope.row)">
-              <i v-if="scope.row.installLoading" class="el-icon-loading"></i>
-              {{scope.row.installLoading?'正在启动':'点击启动'}}
-            </el-button>
-         </div>
-        </template>
-      </el-table-column>
-    </el-table>
+    <div class="title-content">
+      <img class="software-img" :src="software" />
+      <div class="title-text">软件概况</div>
+    </div>
+    <div class="software-list">
+      <div class="list-item" v-for="(item,index) in softwareList" :key="index">
+        <div>{{item.name}}</div>
+        <div class="item-right">
+          <div v-if="item.id == 1" class="item-text" :class="item.num == 1?' installed':''">{{item.num == 1?'已安装':'未安装'}}</div>
+          <div v-else class="item-text" :class="item.num == 1?' installed':''">{{item.num == 1?'已启动':'未启动'}}</div>
+          <div v-if="item.num == 0 && item.id == 1" class="item-btn" @click="handleInstall(item)">
+            <i v-if="item.installLoading" class="el-icon-loading"></i>
+            <span v-if="item.installLoading">正在安装</span>
+            <span v-else>点击安装</span>
+          </div>
+          <div v-if="item.num == 0 && item.id != 1" class="item-btn" @click="handleInstall(item)">
+            <i v-if="item.installLoading" class="el-icon-loading"></i>
+            <span v-if="item.installLoading">正在启动</span>
+            <span v-else>点击启动</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
 </template>
 
 <script>
@@ -130,7 +116,7 @@ export default {
       this.listLoading = true
       var that = this
       getList().then(response => {
-        //console.log('列表1111', response.data)
+        console.log('列表1111', response.data)
         if(response.code == 200){
           var data = response.data || {}
           that.hardwareList = that.hardwareList.map(ele => {
@@ -174,7 +160,7 @@ export default {
        params.soft = 'spark'
       }
       sysinInstalled(params).then(response => {
-         //console.log('安装111', response.data)
+         console.log('安装111', response.data)
         if(response.code == 200){
           item.installLoading = false
           this.$notify({
@@ -193,30 +179,104 @@ export default {
   
 }
 </script>
+<style>
+.app-main {
+  height: 100% !important;
+  background: #fff !important;
+}
+</style>
 <style scoped>
+.app-container {
+  background: #fff;
+  padding: unset;
+}
+.title-content {
+  height: 68px;
+  background: rgb(230, 242, 252);
+  padding-left: 50px;
+  font-size: 26px;
+  color: rgb(43, 139, 225);
+  display: flex;
+  align-items: center;
+}
+
 .warn-content {
   display: flex;
   align-items: center;
-  height: 30px;
+  height: 70px;
   padding-left: 90px;
 }
 .warn-content img {
   width: 25px;
-  height: 25px;
+  height: 23px;
   margin-right: 12px;
 }
 .warn-content .warn-text {
   font-size: 14px;
   color: #ff9c00;
 }
+.hardware-img {
+  width: 26px;
+	height: 20px;
+  margin-right: 12px;
+}
+.software-img {
+  width: 26px;
+	height: 29px;
+  margin-right: 12px;
+}
+.hardware-list {
+  padding: 0 90px;
+  /* margin-bottom: 20px; */
+}
+.hardware-list .list-item {
+  display: flex;
+  align-items: center;
+  height: 70px;
+  border-bottom: 1px solid #e4f0f7;
+  font-size: 14px;
+  color: #111213;
+}
+.hardware-list .list-item .item-name {
+  margin-right: 100px;
+}
+.software-list {
+  padding: 0 90px;
+}
+.software-list .list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  border-bottom: 1px solid #e4f0f7;
+  font-size: 14px;
+  color: #111213;
+}
+.software-list .list-item .item-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+}
 .item-text {
   color: rgb(254, 141, 0);
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 20px;
 }
 .installed {
   color: rgb(22, 200, 118);
+}
+.item-btn {
+  margin-left: 25px;
+  width: 90px;
+  height: 28px;
+  background: rgb(64,158,255);
+  border-radius: 4px;
+  line-height: 28px;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+}
+.item-btn .el-icon-loading {
+  margin-right: 5px;
 }
 
 </style>
