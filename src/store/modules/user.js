@@ -39,11 +39,10 @@ const actions = {
           commit('SET_TOKEN', response.data)
           setToken(response.data)
           resolve('abc')
-         }else{
+        } else {
            that.loading = false
            that.$message.error(response.msg)
-         }
-        
+        }
       }).catch(error => {
         reject(error)
       })

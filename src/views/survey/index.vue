@@ -12,7 +12,7 @@
     </div>
     <div class="warn-content">
       <img v-if="coresData<2 || memData<2" :src="warnImg" />
-      <div v-if="coresData<2 || memData<2" class="warn-text">您的系统配置过低，可能无法运行Spark，推荐系统配置2核2G</div>
+      <div v-if="coresData<2 || memData<2" class="warn-text">您的系统配置过低，可能无法运行Spark，推荐系统配置4核4G</div>
     </div>
     <div class="title-content">
       <img class="software-img" :src="software" />
@@ -54,9 +54,7 @@ export default {
       const statusMap = {
         '1': 'Android ',
         '2': 'iOS',
-        '3': 'H5',
         '4': '小程序',
-        '5': 'Unity'
       }
       return statusMap[status]
     }
