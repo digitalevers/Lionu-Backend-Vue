@@ -4,12 +4,12 @@
       <div class="filter-title">硬件概况</div>
     </div>
     <el-table v-loading="listLoading" :data="hardwareList" fit stripe highlight-current-row>
-      <el-table-column align="center" label="配置项" width="200">
+      <el-table-column align="center" label="配置项">
         <template slot-scope="scope">
           {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="配置值" width="200">
+      <el-table-column align="center" label="配置值">
         <template slot-scope="scope">
           {{ scope.row.num }}
         </template>
@@ -25,12 +25,12 @@
       <div class="filter-title">软件概况</div>
     </div>
     <el-table v-loading="listLoading" :data="softwareList" fit stripe highlight-current-row>
-      <el-table-column align="center" label="环境" width="200">
+      <el-table-column align="center" label="环境">
         <template slot-scope="scope">
           {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" width="200">
+      <el-table-column align="center" label="操作">
         <template slot-scope="scope">
           <div class="item-right">
             <div v-if="scope.row.id == 1" class="item-text" :class="scope.row.num == 1?' installed':''">{{scope.row.num == 1?'已安装':'未安装'}}</div>
@@ -196,7 +196,7 @@ export default {
   display: flex;
   align-items: center;
   height: 30px;
-  padding-left: 90px;
+  margin: 0 0 20px 0;
 }
 .warn-content img {
   width: 25px;
