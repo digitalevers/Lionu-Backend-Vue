@@ -53,7 +53,6 @@
       </el-table-column> -->
       <el-table-column align="center"  label="操作" >
         <template slot-scope="scope">
-          <!-- <el-button type="primary" size="mini" @click="handleDownload(scope)">下载SDK</el-button> -->
          <el-button type="primary" plain size="mini" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
