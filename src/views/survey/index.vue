@@ -82,11 +82,15 @@ export default {
       hardwareList: [
         {
           id: 1,
-          name: 'CPU'
+          name: '物理CPU'
         },
         {
           id: 2,
           name: '内存'
+        },
+        {
+          id: 3,
+          name: '逻辑vCPU'
         },
       ],
       softwareList: [
@@ -138,6 +142,9 @@ export default {
             }else if(ele.id == 2){
               ele.num = data.mem+'G'
               that.memData = data.mem || 0
+            } else if(ele.id == 3){
+              ele.num = data.vcpu+'核'
+              that.vcpuData = data.vcpu || 0
             }
             return ele
           })
