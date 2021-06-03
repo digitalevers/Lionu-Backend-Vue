@@ -17,8 +17,8 @@
     </el-table>
 
     <div class="warn-content">
-        <img v-if="coresData<4 || memData<4" :src="warnImg" />
-        <div v-if="coresData<4 || memData<4" class="warn-text">您的系统配置过低，可能无法运行Spark，推荐系统配置4核4G</div>
+        <img v-if="vcpuData<4 || memData<4" :src="warnImg" />
+        <div v-if="vcpuData<4 || memData<4" class="warn-text">您的系统配置过低，可能无法运行Spark，推荐系统配置4核4G</div>
     </div>
 
     <div class="filter-container">
