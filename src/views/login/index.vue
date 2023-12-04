@@ -14,7 +14,7 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          placeholder="用户名"
+          placeholder="测试用户名:admin"
           name="username"
           type="text"
           tabindex="1"
@@ -31,7 +31,7 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          placeholder="密码"
+          placeholder="测试密码:123456"
           name="password"
           tabindex="2"
           auto-complete="on"
