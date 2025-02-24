@@ -169,7 +169,7 @@ export default {
         statis_end_date: '', //统计结束日期
         pay_start_date: '',  //付费起始日期（可选）
         pay_end_date: '',  //付费结束日期（可选）
-        custom_params: 'base_click,base_active,base_reg,base_reg_rate,ltv1,ltv2,ltv3,ltv4,ltv5,ltv6,ltv7,ret1,ret2,ret3,ret4,ret5,ret6,ret7,pay_total_amount,pay_new_amount,pay_new_device',  //自定义参数
+        custom_params: 'base_click,base_active,base_reg,base_reg_device,base_reg_rate,ltv1,ltv2,ltv3,ltv4,ltv5,ltv6,ltv7,ret1,ret2,ret3,ret4,ret5,ret6,ret7,pay_total_amount,pay_new_amount,pay_new_device',  //自定义参数
       },
       total: 10,
       //可变列

@@ -11,7 +11,12 @@ const all = [
     },
     {
         id: 'base_reg',
-        name: '注册设备数',
+        name: '注册次数',
+        disabled: true,
+    },
+    {
+        id: 'base_reg_device',
+        name: '去重注册数',
         disabled: true,
     },
     {
