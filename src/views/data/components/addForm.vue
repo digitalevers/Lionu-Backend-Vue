@@ -123,14 +123,13 @@ export default {
               id: 'ltv120',
               name: 'LTV120',
           }
-
       ],
       checkTwoList: [
-          {
-              id: 'ret1',
-              name: 'D1留存',
-              disabled: true,
-          },
+        //   {
+        //       id: 'ret1',
+        //       name: 'D1留存',
+        //       disabled: true,
+        //   },
           {
               id: 'ret2',
               name: 'D2留存',
@@ -252,7 +251,7 @@ export default {
           },
           {
               id: 'base_reg',
-              name: '注册次数',
+              name: '注册数',
               disabled: true,
           },
           {
