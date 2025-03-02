@@ -91,7 +91,18 @@ export const constantRoutes = [
       }
     ]
   },
-  
+  {
+    path: '/channel',
+    component: Layout,
+    children: [
+      {
+        path: '/channel/index',
+        name: 'Channel',
+        component: () => import('@/views/channel/index'),
+        meta: { title: '渠道管理', icon: require('@/assets/channel.png'), iconActive: require('@/assets/channel_active.png') }
+      }
+    ]
+  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
