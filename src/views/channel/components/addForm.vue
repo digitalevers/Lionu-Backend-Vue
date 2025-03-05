@@ -45,61 +45,8 @@ export default {
   },
   created() {},
   methods: {
-    handleOpen(e, app_id, app_event) {
-      console.log('弹窗数据',e, app_id, app_event)
-      this.app_id = app_id
-      this.dialogVisible = true;
-      this.step = e ? e : 1;
-      this.stepIndex = e ? e : 1;
-      this.eventIndex = 0;
-      this.isRotate = [{rotate:false}, {rotate:false}, {rotate:false}]
-      if(app_event && app_event.active == 1) {
-        this.eventIndex = 1
-        if(app_event.reg == 1){
-          this.isRotate[2].rotate = true
-        }
-        else {
-          this.isRotate[1].rotate = true
-        } 
-        
-      }
-      if(app_event && app_event.reg == 1) {
-        this.eventIndex = 2
-        if(app_event.pay != 1) this.isRotate[2].rotate = true
-      }
-      if(app_event && app_event.pay == 1) {
-        this.eventIndex = 3
-        this.isRotate[2].rotate = false
-      }
-      if(app_event && app_event.active == 0 && app_event.reg == 0 && app_event.pay == 0) {
-        this.isRotate[0].rotate = true
-      }
-      
-      if(this.step == 3) {
-        this.handleInterval()
-      }
-      if(this.step == 1) {
-        this.$nextTick(() => {
-          this.$refs['dataForm'].clearValidate()
-        })
-      }
-      
-    },
-    handleInterval() {
-      this.handleList() 
-      this.timer = window.setInterval(() => {
-          setTimeout(() => {
-              this.handleList()
-          },0)
-      },5000)
-    },
-    handleList() {
-      // this.isRotate[this.eventIndex].rotate = true; 
-      let eventNames = ['active', 'reg', 'pay']
-      const tempData = {
-        app_id: this.app_id,
-        event_name: eventNames[this.eventIndex],
-      }
+    handleOpen() {
+      this.dialogVisible = true
     },
     //确定
     handleAdd() {
