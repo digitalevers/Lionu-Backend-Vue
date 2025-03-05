@@ -138,7 +138,7 @@ export default {
     handleAdd() {
       this.$refs.dialogForm.handleOpen()
     },
-     handleCopy(index,row){
+    handleCopy(index,row){
       this.copyData = row.click_monitor_link
       this.copy(this.copyData)
     },

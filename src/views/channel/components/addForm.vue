@@ -1,22 +1,6 @@
 <template>
   <el-dialog title="新建渠道" :visible.sync="dialogVisible" width="644px" @close="close" :lock-scroll="false">
-    <div class="bottom-content">
-      <div class="step" v-for="(item, index) in steps" :key="index">
-        <div class="step-top" :class="{'step-top-finish': item.id < stepIndex}">
-          {{ item.top }}
-        </div>
-        <div class="step-mid">
-          <div class="step-line" v-if="item.id < 3" :class="{'step-line-finish': item.id < stepIndex - 1}"></div>
-          <div class="step-circle" :class="{'step-circle-finish':item.id < stepIndex}">
-            <div class="step-circle-in" v-show="item.id < stepIndex"></div>
-            <div class="step-circle-text" :class="{'step-circle-text-finish':item.id < stepIndex}">{{ item.mid }}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- 第一步 -->
     <el-form
-      v-if="step == 1"
       ref="dataForm"
       :model="temp"
       label-position="right"
@@ -24,110 +8,36 @@
       :rules="rules"
       style="margin-left:20px;margin-right:80px;"
     >
-      <el-form-item label="应用名称" prop="app_name">
-        <el-input v-model="temp.app_name" placeholder="请填下您的应用名称" style="width: 100%" />
+      <el-form-item label="渠道名称" prop="channel_name">
+        <el-input v-model="temp.channel_name" placeholder="请填下您的渠道名称" style="width: 100%" />
       </el-form-item>
-      <el-form-item label="应用平台" prop="app_os">
-        <el-select v-model="temp.app_os" placeholder="请选择应用平台" style="width: 100%">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
+      <el-form-item label="Android监测链接" prop="android_monitor_url">
+        <el-input v-model="temp.android_monitor_url" placeholder="只需要填写参数即可，示例 aid=__AID__&imei_md5=__IMEI__&mac_md5=__MAC1__....."  style="width: 100%" />
       </el-form-item>
-      <el-form-item label="应用包名" prop="package_name">
-        <el-input v-model="temp.package_name" placeholder="请输入应用包名"  style="width: 100%" />
+      <el-form-item label="iOS监测链接" prop="ios_monitor_url">
+        <el-input v-model="temp.ios_monitor_url" placeholder="只需要填写参数即可，示例 aid=__AID__&idfa_md5=__IDFA_MD5__&mac_md5=__MAC1__&caid=__CAID__....."  style="width: 100%" />
       </el-form-item>
-      <!-- <el-form-item label="下载地址" prop="advertisingName">
-        <el-input v-model="temp.advertisingName" placeholder="https://" style="width: 100%" />
-      </el-form-item> -->
     </el-form>
-    <!-- 第二步 -->
-    <div class="content" v-else-if="step == 2">
-      <div class="con-item" @click="handleLook">
-        <img src="@/assets/look.png" />
-        <div class="item-text">查看文档</div>
-      </div>
-      <div class="con-item" @click="handleDownload">
-        <img src="@/assets/download.png" />
-        <div class="item-text">下载SDK</div>
-      </div>
-    </div>
-    <!-- 第三步 -->
-    <div class="three"  v-else-if="step == 3 || step == 4">
-      <div class="three-item">
-        <div class="three-left">等待授权后激活回传</div>
-        <img :src="eventIndex > 0 ? finishImg : processImg" :class="{'three-img':isRotate[0].rotate}"/>
-      </div>
-      <div class="three-item" >
-        <div class="three-left">等待注册事件回传</div>
-        <img :src="eventIndex > 1 ? finishImg : processImg" :class="{'three-img':isRotate[1].rotate}"/>
-      </div>
-      <div class="three-item">
-        <div class="three-left">等待付费事件回传</div>
-        <img :src="eventIndex > 2 ? finishImg : processImg" :class="{'three-img':isRotate[2].rotate}"/>
-      </div>
-    </div>
-     <span slot="footer" class="dialog-footer" v-if="step == 3 || step == 4" style="padding-right: 218px;">
-      <el-button type="primary" plain @click="handleAdd" :disabled="eventIndex < 3">确定</el-button>
-    </span>
-    <span slot="footer" class="dialog-footer" v-else>
+    <span slot="footer" class="dialog-footer">
       <el-button type="primary" plain @click="handleClose">取 消</el-button>
-      <el-button type="primary" @click="handleNext">下一步</el-button>
+      <el-button type="primary" @click="handleAdd">确定</el-button>
     </span>
-   
   </el-dialog>
 </template>
 <script>
-import { requestAdd,requestEvent } from '@/api/app'
+import { requestAdd } from '@/api/channel'
 export default {
   data() {
     return {
       isRotate: [{rotate:false},{rotate:false},{rotate:false}],
       dialogVisible: false,
-
-      steps: [
-        { id: 1, top: "应用信息", mid: '1' },
-        { id: 2, top: "接入SDK", mid: '2' },
-        { id: 3, top: "调试SDK", mid: '3' },
-
-      ],
-      stepIndex: 1,
-      //第一步
-      step: 1,
       temp: {},
-      options: [
-        {
-          value: '1',
-          label: 'Android'
-        }, {
-          value: '2',
-          label: 'IOS'
-        }, {
-          value: '3',
-          label: 'H5'
-        }, {
-          value: '4',
-          label: '小程序'
-        }, {
-          value: '5',
-          label: 'Unity'
-        }
-      ],
       rules: {
-        app_name: [
-          { required: true, message: "请填下您的应用名称", trigger: "change" }
-        ],
-        app_os: [
-          { required: true, message: "请选择应用平台", trigger: "change" }
-        ],
-        package_name: [
-          { required: true, message: "请输入应用包名", trigger: "change" }
+        channel_name: [
+          { required: true, message: "请填写渠道名称", trigger: "change" }
         ]
       },
-      app_id: null, //应用id
+
       eventIndex: 0,
       processImg: require('@/assets/process.png'),
       finishImg: require('@/assets/finish.png'),
@@ -136,7 +46,7 @@ export default {
   created() {},
   methods: {
     handleOpen(e, app_id, app_event) {
-      console.log('弹窗数据',e,app_id, app_event)
+      console.log('弹窗数据',e, app_id, app_event)
       this.app_id = app_id
       this.dialogVisible = true;
       this.step = e ? e : 1;
@@ -175,65 +85,6 @@ export default {
       }
       
     },
-    //下一步
-    handleNext () {
-      if(this.step == 1) {
-        this.$refs["dataForm"].validate(valid => {
-          if (valid) {
-            
-            this.step = 2;
-            this.stepIndex = 2;
-            const tempData = {
-              ...this.temp,
-              step: 1,
-            }
-            requestAdd( tempData ).then(response => {
-              if(response.code == 200) {
-                console.log('新增', response)
-                this.app_id = response.data.app_id;
-                this.$notify({
-                  type: "success",
-                  message: "新增成功!",
-                  duration: 2000
-                });
-              }
-              else{
-                this.$message.error(response.msg)
-              }
-             
-              // this.$router.back();
-            });
-          }
-        });
-      }
-      else{
-        const tempData = {
-          app_id: this.app_id,
-          step: 2,
-        }
-        requestAdd( tempData ).then(response => {
-          if(response.code == 200) {
-            // console.log('新增', response)
-            // this.app_id = response.data.app_id;
-            // this.$notify({
-            //   type: "success",
-            //   message: "新增成功!",
-            //   duration: 2000
-            // });
-            this.handleInterval()
-            this.step = 3;
-            this.stepIndex = 3;
-            
-          }
-          else{
-            this.$message.error(response.msg)
-          }
-          
-          // this.$router.back();
-        });
-        
-      } 
-    },
     handleInterval() {
       this.handleList() 
       this.timer = window.setInterval(() => {
@@ -244,75 +95,39 @@ export default {
     },
     handleList() {
       // this.isRotate[this.eventIndex].rotate = true; 
-      
-      
       let eventNames = ['active', 'reg', 'pay']
       const tempData = {
         app_id: this.app_id,
         event_name: eventNames[this.eventIndex],
       }
-
-      // setTimeout(() => {
-      //          this.isRotate[this.eventIndex].rotate = false;
-      //           this.eventIndex += 1;
-      //     },1000)
-     
-      requestEvent(tempData).then(res => {
-        if(this.eventIndex == 3) {
-          window.clearInterval(this.timer)
-        }
-        if(res.data && res.data.event_status == 1) {
-          this.isRotate[this.eventIndex].rotate = false;
-          this.eventIndex += 1;
-          if(this.eventIndex < 3) {
-            let data = this.isRotate[this.eventIndex]
-            console.log('data',data)
-            this.$set(data, 'rotate', true)
-            console.log('1',this.eventIndex,this.isRotate )
-          }
-        }
-      })
     },
     //确定
     handleAdd() {
-      const tempData = {
-        app_id: this.app_id,
-        step: 3,
-      }
-      requestAdd( tempData ).then(response => {
-        if(response.code == 200) {
-          
-          this.step = 4;
-          this.stepIndex = 4;
-          this.dialogVisible = false;
+      this.$refs["dataForm"].validate(valid => {
+        if (valid) {
+          const tempData = this.temp
+          requestAdd( tempData ).then(response => {
+            if(response.code == 200) {
+              this.dialogVisible = false;
+            }
+            else{
+              this.$message.error(response.msg)
+            }
+            // this.$router.back();
+          });
         }
-        else{
-          this.$message.error(response.msg)
-        }
-        
-        // this.$router.back();
-      });
-      
+      })
     },
     close () {
-      console.log('close方法')
+      //console.log('close方法')
       this.$emit('father')  
-      this.temp = this.$options.data().temp;
+      //this.temp = this.$options.data().temp;
       this.dialogVisible = false;
       window.clearInterval(this.timer)
-     
     },
     handleClose() {
       this.dialogVisible = false;
-    },
-    //查看文档
-    handleLook() {
-      window.open(process.env.VUE_APP_BASE_API + '/Sysin/doc');
-    },
-    //下载sdk
-    handleDownload() {
-      window.open(process.env.VUE_APP_BASE_API + '/Sysin/downloadSDK?app_id=' + this.app_id); 
-    },
+    }
   },
 };
 </script>

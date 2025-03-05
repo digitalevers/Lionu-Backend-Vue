@@ -27,8 +27,8 @@
       <el-form-item label="应用名称" prop="app_name">
         <el-input v-model="temp.app_name" placeholder="请填下您的应用名称" style="width: 100%" />
       </el-form-item>
-      <el-form-item label="应用平台" prop="app_os">
-        <el-select v-model="temp.app_os" placeholder="请选择应用平台" style="width: 100%">
+      <el-form-item label="应用类型" prop="app_os">
+        <el-select v-model="temp.app_os" placeholder="请选择应用类型" style="width: 100%">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -121,7 +121,7 @@ export default {
           { required: true, message: "请填下您的应用名称", trigger: "change" }
         ],
         app_os: [
-          { required: true, message: "请选择应用平台", trigger: "change" }
+          { required: true, message: "请选择应用类型", trigger: "change" }
         ],
         package_name: [
           { required: true, message: "请输入应用包名", trigger: "change" }
