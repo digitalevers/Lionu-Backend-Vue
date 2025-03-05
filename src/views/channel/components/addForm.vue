@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="新建应用" :visible.sync="dialogVisible" width="644px" @close="close" :lock-scroll="false">
+  <el-dialog title="新建渠道" :visible.sync="dialogVisible" width="644px" @close="close" :lock-scroll="false">
     <div class="bottom-content">
       <div class="step" v-for="(item, index) in steps" :key="index">
         <div class="step-top" :class="{'step-top-finish': item.id < stepIndex}">
